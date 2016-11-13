@@ -2732,6 +2732,35 @@ See \`config.log' for more details" "$LINENO" 5; }
   fi
 done
 
+if test -n "$OS2_SHELL"; then
+  # Backslashes into forward slashes:
+  # The following OS/2 specific code is performed AFTER config.site
+  # has been loaded to allow users to change their environment there.
+  # This strange code is necessary to deal with handling of backslashes by
+  # ksh.
+  ac_save_IFS="$IFS"
+  IFS="\\"
+  ac_TEMP_PATH=
+  for ac_dir in $PATH; do
+    IFS=$ac_save_IFS
+    if test -z "$ac_TEMP_PATH"; then
+      ac_TEMP_PATH="$ac_dir"
+    else
+      ac_TEMP_PATH="$ac_TEMP_PATH/$ac_dir"
+    fi
+  done
+  export PATH="$ac_TEMP_PATH"
+  unset ac_TEMP_PATH
+
+  # add .exe to ac_executable_extensions
+  if test -z "$ac_executable_extensions"; then
+    { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: ac_executable_extensions not set, assuming .exe" >&5
+$as_echo "$as_me: WARNING: ac_executable_extensions not set, assuming .exe" >&2;}
+  fi
+  ac_executable_extensions="$ac_executable_extensions .exe"
+  export ac_executable_extensions
+fi
+
 if test -r "$cache_file"; then
   # Some versions of bash will fail to source /dev/null (special files
   # actually), so we avoid doing that.  DJGPP emulates it as a regular file.
@@ -28256,6 +28285,10 @@ case $host in
   *-*-mingw*)
     glib_os="#define G_OS_WIN32
 #define G_PLATFORM_WIN32"
+    ;;
+  *-*-os2*)
+    glib_os="#define G_OS_OS2
+#define G_OS_UNIX"
     ;;
   *)
     glib_os="#define G_OS_UNIX"
