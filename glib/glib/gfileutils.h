@@ -155,8 +155,13 @@ gint     g_mkdir_with_parents (const gchar *pathname,
 #define G_DIR_SEPARATOR '/'
 #define G_DIR_SEPARATOR_S "/"
 #define G_IS_DIR_SEPARATOR(c) ((c) == G_DIR_SEPARATOR)
+#ifndef G_OS_OS2
 #define G_SEARCHPATH_SEPARATOR ':'
 #define G_SEARCHPATH_SEPARATOR_S ":"
+#else  /* !G_OS_OS2 */
+#define G_SEARCHPATH_SEPARATOR ';'
+#define G_SEARCHPATH_SEPARATOR_S ";"
+#endif /* !G_OS_OS2 */
 
 #endif /* !G_OS_WIN32 */
 
