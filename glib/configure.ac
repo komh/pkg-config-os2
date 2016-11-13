@@ -3225,6 +3225,10 @@ case $host in
     glib_os="#define G_OS_WIN32
 #define G_PLATFORM_WIN32"
     ;;
+  *-*-os2*)
+    glib_os="#define G_OS_OS2
+#define G_OS_UNIX"
+    ;;
   *)
     glib_os="#define G_OS_UNIX"
     ;;
