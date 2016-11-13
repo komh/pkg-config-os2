@@ -1159,7 +1159,11 @@ g_system_thread_new (GThreadFunc   thread_func,
 void
 g_thread_yield (void)
 {
+#ifndef G_OS_OS2
   sched_yield ();
+#else
+  pthread_yield ();
+#endif
 }
 
 void
